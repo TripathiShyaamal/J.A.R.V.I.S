@@ -78,7 +78,7 @@ def sendEmail(to,content): # This function is used to send the email to the user
      server=smtplib.SMTP('smtp.gmail.com',587) # Setting up smtp object using gmail's smtp server and port 587 
      server.ehlo() # This is a function which is used to identify the server.
      server.starttls() # Activating the transport layer security to the outgoing mail message.
-     server.login('shyaamaltripathi@gmail.com','pinkylalli') # This is the login credentials of the user.
+     server.login('shyaamaltripathi@gmail.com','password') # This is the login credentials of the user.
      server.sendmail('shyaamaltripathi@gmail.com',to,content) # This is the function which sends the email to the user.
      server.close() # Closing the server
      
@@ -92,13 +92,18 @@ if __name__=="__main__":
          query=takeCommand().lower()
          
          if 'wikipedia' in query:
-              speak('Alright Sir, It would be a lot better for my processors if you could just tell me the name of the person or object or any stuff that you want to me to search')
+              speak('Alright Sir, It would be a lot better for my processors if you could just tell me the name of the person or object or any stuff that you want me to search')
               q=takeCommand().lower() # Taking specific name so as to make searching easy
               #query=query.replace("wikipedia","")
-              results=wikipedia.summary(q, sentences=2) # This is a function which returns the summary of the page.
-              speak("Okay Sir, so according to Wikipedia")
-              print(results) # For printing the summary of the page on the console.
-              speak(results)
+              
+              try:
+                   results=wikipedia.summary(q,sentences=2) # This is the function which searches the wikipedia database and returns the summary of the searched topic.
+                   speak("According to wikipedia")
+                   print(results)
+                   speak(results)
+              except wikipedia.exceptions.PageError:
+                   pass
+              
           
          elif 'open youtube' in query:
               speak("Sure Sir")
